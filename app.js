@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser("your-secret-key"));
 
 // Connect to MongoDB Atlas
-const dbURI = "mongodb+srv://rahman:rahman2005@cluster0.fni9n.mongodb.net/multipage-form?retryWrites=true&w=majority";
+const dbURI = process.env.MONGODB_URI || "mongodb+srv://rahman:rahman2005@cluster0.fni9n.mongodb.net/multipage-form?retryWrites=true&w=majority";
 mongoose
     .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("Connected to MongoDB Atlas"))
@@ -31,7 +31,20 @@ mongoose
 const routes = require("./routes"); // Ensure your routes are correctly implemented in the routes/index.js file
 app.use("/", routes);
 
-module.exports = app;
-// app.listen(3000, () => {
-//     console.log("Server started on port 3000");
-// });
+// Set port and listen
+const port = process.env.PORT || 3000;
+
+app.listen(port, "0.0.0.0", () => {
+    console.log(`Server started on port ${port}`);
+});
+
+// Handle uncaught errors and rejections
+process.on("unhandledRejection", (error) => {
+    console.error("Unhandled promise rejection:", error);
+    process.exit(1);
+});
+
+process.on("uncaughtException", (error) => {
+    console.error("Uncaught exception:", error);
+    process.exit(1);
+});
