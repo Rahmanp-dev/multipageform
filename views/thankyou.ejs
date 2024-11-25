@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You for Registering</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #40e0d0 0%, #e6e6fa 100%);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 40px 20px;
+        }
+
+        .logo {
+            width: 15rem;
+            height: 15rem;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .unique-id {
+            font-size: 1.8rem;
+            color: #1a1a1a;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+
+        .update-text {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .community-text {
+            font-size: 1.1rem;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            line-height: 1.5;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .social-link:hover {
+            transform: scale(1.1);
+        }
+
+        .social-link img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="/images/logo.png" alt="Logo" class="logo">
+
+        <h1>Thank You for Registering</h1>
+
+        <div class="unique-id" id="uniqueId">Your Unique ID: YUDI-</div>
+
+        <div class="update-text">We'll update you soon with your match!</div>
+
+        <p class="community-text">
+            Join our WhatsApp community below and start exploring to
+            find your people and connect with like-minded communities.
+        </p>
+
+        <div class="social-links">
+            <a href="https://chat.whatsapp.com/KuSKqje7Kta5THdwvlyD9d" class="social-link">
+                <img src="/images/whatsapp.png" alt="WhatsApp">
+            </a>
+            <a href="#" class="social-link">
+                <img src="/images/instagram.png" alt="Instagram">
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Generate a random 4-digit number
+        const randomId = Math.floor(1000 + Math.random() * 9000);
+
+        // Select the element with the ID 'uniqueId' and append the random number
+        document.getElementById("uniqueId").textContent += randomId;
+    </script>
+</body>
+
+</html>
