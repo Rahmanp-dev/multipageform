@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser("your-secret-key"));
 
 // Connect to MongoDB Atlas
-const dbURI = process.env.MONGODB_URI || "mongodb+srv://rahman:rahman2005@cluster0.fni9n.mongodb.net/multipage-form?retryWrites=true&w=majority";
+const dbURI = process.env.MONGODB_URI || "mongodb+srv://yudiapp:yudiapp2024@app.th91t.mongodb.net/?retryWrites=true&w=majority&appName=APP";
 mongoose
     .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("Connected to MongoDB Atlas"))
