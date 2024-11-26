@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - View Users</title>
+</head>
+
+<body>
+    <h1>Admin Panel</h1>
+    <h2>User Data</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Interests</th>
+                <th>Qualities</th>
+                <th>Hobbies</th>
+                <th>About</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user=> { %>
+                <tr>
+                    <td>
+                        <%= user.name %>
+                    </td>
+                    <td>
+                        <%= user.email %>
+                    </td>
+                    <td>
+                        <%= user.age %>
+                    </td>
+                    <td>
+                        <%= user.gender %>
+                    </td>
+                    <td>
+                        <% if (user.interests && typeof user.interests==='object' ) { %>
+                            <% Object.keys(user.interests).forEach(category=> { %>
+                                <% let values=user.interests[category]; %>
+                                    <% if (Array.isArray(values)) { %>
+                                        <strong>
+                                            <%= category %>:
+                                        </strong>
+                                        <ul>
+                                            <% values.forEach(interest=> { %>
+                                                <li>
+                                                    <%= interest %>
+                                                </li>
+                                                <% }); %>
+                                        </ul>
+                                        <% } else { %>
+                                            <p>No interests listed for <%= category %>
+                                            </p>
+                                            <% } %>
+                                                <% }); %>
+                                                    <% } else { %>
+                                                        <p>No interests available</p>
+                                                        <% } %>
+                    </td>
+                    <td>
+                        <%= user.questions.qualities || 'No data' %>
+                    </td>
+                    <td>
+                        <%= user.questions.hobbies || 'No data' %>
+                    </td>
+                    <td>
+                        <%= user.questions.about || 'No data' %>
+                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
+    </table>
+</body>
+
+</html>

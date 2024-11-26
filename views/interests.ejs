@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's Your Vibe?</title>
+    <style>
+        /* Modern CSS Reset */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Custom Properties */
+        :root {
+            --color-dance: #E91E63;
+            --color-party: #F39C12;
+            --color-food: #FF5722;
+            --color-gaming: #2ECC71;
+            --color-movies: #5C6BC0;
+            --color-music: #26A69A;
+            --color-photo: #2196F3;
+            --color-reading: #F1C40F;
+            --color-social: #E74C3C;
+            --color-sports: #27AE60;
+            --color-tech: #7F8C8D;
+            --color-travel: #F39C12;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(to bottom, #f0f4f8, #e1e8f0);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #5f6368;
+            margin-bottom: 2rem;
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .interest-category {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .interest-category:hover {
+            transform: translateY(-4px);
+        }
+
+        .category-header {
+            padding: 1.5rem;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-icon {
+            font-size: 1.5rem;
+        }
+
+        .sub-interests {
+            padding: 1.5rem;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 4px;
+            accent-color: currentColor;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .submit-button {
+            display: block;
+            margin: 2rem auto;
+            padding: 1rem 3rem;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .submit-button:hover {
+            background: #1557b0;
+        }
+
+        /* Category-specific colors */
+        .dance {
+            background-color: var(--color-dance);
+        }
+
+        .party {
+            background-color: var(--color-party);
+        }
+
+        .food {
+            background-color: var(--color-food);
+        }
+
+        .gaming {
+            background-color: var(--color-gaming);
+        }
+
+        .movies {
+            background-color: var(--color-movies);
+        }
+
+        .music {
+            background-color: var(--color-music);
+        }
+
+        .photo {
+            background-color: var(--color-photo);
+        }
+
+        .reading {
+            background-color: var(--color-reading);
+        }
+
+        .social {
+            background-color: var(--color-social);
+        }
+
+        .sports {
+            background-color: var(--color-sports);
+        }
+
+        .tech {
+            background-color: var(--color-tech);
+        }
+
+        .travel {
+            background-color: var(--color-travel);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .interests-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .interests-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .interests-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>What's Your Vibe?</h1>
+        <p class="subtitle">Pick your interests and connect with students who share your passions.</p>
+
+        <form action="/interests" method="POST">
+            <div class="interests-grid">
+                <!-- Movies and TV Shows -->
+                <div class="interest-category">
+                    <div class="category-header movies">
+                        <span class="category-icon">🎬</span>
+                        Movies and TV Shows
+                    </div>
+                    <div class="sub-interests">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="bollywood" name="interests[Movies and TV Shows][]"
+                                value="Bollywood Movies">
+                            <label for="bollywood">Bollywood Movies</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="hollywood" name="interests[Movies and TV Shows][]"
+                                value="Hollywood Movies">
+                            <label for="hollywood">Hollywood Movies</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="anime" name="interests[Movies and TV Shows][]"
+                                value="Anime and Manga">
+                            <label for="anime">Anime and Manga</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="regional" name="interests[Movies and TV Shows][]"
+                                value="Regional Cinema">
+                            <label for="regional">Regional Cinema</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="webseries" name="interests[Movies and TV Shows][]"
+                                value="Web Series">
+                            <label for="webseries">Web Series</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="documentaries" name="interests[Movies and TV Shows][]"
+                                value="Documentaries">
+                            <label for="documentaries">Documentaries</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Partying and Hanging Out -->
+                <div class="interest-category">
+                    <div class="category-header party">
+                        <span class="category-icon">🎉</span>
+                        Partying and Hanging Out
+                    </div>
+                    <div class="sub-interests">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="clubs" name="interests[Partying and Hanging Out][]"
+                                value="Clubs and Nightlife">
+                            <label for="clubs">Clubs and Nightlife</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="houseparties" name="interests[Partying and Hanging Out][]"
+                                value="House Parties">
+                            <label for="houseparties">House Parties</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="cafemeetups" name="interests[Partying and Hanging Out][]"
+                                value="Cafe Meetups">
+                            <label for="cafemeetups">Cafe Meetups</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="picnics" name="interests[Partying and Hanging Out][]"
+                                value="Outdoor Picnics">
+                            <label for="picnics">Outdoor Picnics</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="karaoke" name="interests[Partying and Hanging Out][]"
+                                value="Karaoke Nights">
+                            <label for="karaoke">Karaoke Nights</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="gamenights" name="interests[Partying and Hanging Out][]"
+                                value="Game Nights">
+                            <label for="gamenights">Game Nights</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Music and Performing Arts -->
+                <div class="interest-category">
+                    <div class="category-header music">
+                        <span class="category-icon">🎵</span>
+                        Music and Performing Arts
+                    </div>
+                    <div class="sub-interests">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="bollywoodhits" name="interests[Music and Performing Arts][]"
+                                value="Bollywood Hits">
+                            <label for="bollywoodhits">Bollywood Hits</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="poprock" name="interests[Music and Performing Arts][]"
+                                value="Pop and Rock">
+                            <label for="poprock">Pop and Rock</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="indie" name="interests[Music and Performing Arts][]"
+                                value="Indie and Alternative">
+                            <label for="indie">Indie and Alternative</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="classical" name="interests[Music and Performing Arts][]"
+                                value="Indian Classical (Hindustani, Carnatic)">
+                            <label for="classical">Indian Classical (Hindustani, Carnatic)</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="kpop" name="interests[Music and Performing Arts][]"
+                                value="K-Pop and J-Pop">
+                            <label for="kpop">K-Pop and J-Pop</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="hiphop" name="interests[Music and Performing Arts][]"
+                                value="Rap and Hip-Hop">
+                            <label for="hiphop">Rap and Hip-Hop</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Travel and Adventure -->
+                <div class="interest-category">
+                    <div class="category-header travel">
+                        <span class="category-icon">✈️</span>
+                        Travel and Adventure
+                    </div>
+                    <div class="sub-interests">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="beachmountain" name="interests[Travel and Adventure][]"
+                                value="Beach and Mountain Getaways">
+                            <label for="beachmountain">Beach and Mountain Getaways</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="roadtrips" name="interests[Travel and Adventure][]"
+                                value="Road Trips">
+                            <label for="roadtrips">Road Trips</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="adventuresports" name="interests[Travel and Adventure][]"
+                                value="Adventure Sports (Trekking, Bungee Jumping)">
+                            <label for="adventuresports">Adventure Sports (Trekking, Bungee Jumping)</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="camping" name="interests[Travel and Adventure][]"
+                                value="Camping">
+                            <label for="camping">Camping</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="backpacking" name="interests[Travel and Adventure][]"
+                                value="Backpacking and Budget Travel">
+                            <label for="backpacking">Backpacking and Budget Travel</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="culturaltours" name="interests[Travel and Adventure][]"
+                                value="Cultural and Heritage Tours">
+                            <label for="culturaltours">Cultural and Heritage Tours</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technology and Innovation -->
+                <div class="interest-category">
+                    <div class="category-header tech">
+                        <span class="category-icon">💻</span>
+                        Technology and Innovation
+                    </div>
+                    <div class="sub-interests">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="coding" name="interests[Technology and Innovation][]"
+                                value="Coding and Programming">
+                            <label for="coding">Coding and Programming</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="startups" name="interests[Technology and Innovation][]"
+                                value="Startups and Entrepreneurship">
+                            <label for="startups">Startups and Entrepreneurship</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="ai" name="interests[Technology and Innovation][]"
+                                value="Artificial Intelligence and Machine Learning">
+                            <label for="ai">Artificial Intelligence and Machine Learning</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="blockchain" name="interests[Technology and Innovation][]"
+                                value="Blockchain and Cryptocurrency">
+                            <label for="blockchain">Blockchain and Cryptocurrency</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="gadgets" name="interests[Technology and Innovation][]"
+                                value="Gadgets and Tech Reviews">
+                            <label for="gadgets">Gadgets and Tech Reviews</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="vrar" name="interests[Technology and Innovation][]"
+                                value="Virtual Reality and Augmented Reality">
+                            <label for="vrar">Virtual Reality and Augmented Reality</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sports and Fitness -->
+                <div class="interest-category">
+                    <div class="category-header sports">
+                        <span class="category-icon">🏋️‍♂️</span>
+                        Sports and Fitness
+                    </div>
+                    <div class="sub-interests">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="gym" name="interests[Sports and Fitness][]" value="Gym Workouts">
+                            <label for="gym">Gym Workouts</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="outdoorsports" name="interests[Sports and Fitness][]"
+                                value="Outdoor Sports (Cricket, Football, Basketball)">
+                            <label for="outdoorsports">Outdoor Sports (Cricket, Football, Basketball)</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="running" name="interests[Sports and Fitness][]"
+                                value="Running and Marathons">
+                            <label for="running">Running and Marathons</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="swimming" name="interests[Sports and Fitness][]"
+                                value="Swimming and Water Sports">
+                            <label for="swimming">Swimming and Water Sports</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="yoga" name="interests[Sports and Fitness][]"
+                                value="Yoga and Meditation">
+                            <label for="yoga">Yoga and Meditation</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="adventuresports2" name="interests[Sports and Fitness][]"
+                                value="Adventure Sports">
+                            <label for="adventuresports2">Adventure Sports</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gaming -->
+                <div class="interest-category">
+                    <div class="category-header gaming">
+                        <span class="category-icon">🎮</span>
+                        Gaming
+                    </div>
+                    <div class="sub-interests">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="console" name="interests[Gaming][]" value="Console Gaming">
+                            <label for="console">Console Gaming</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="mobile" name="interests[Gaming][]" value="Mobile Gaming">
+                            <label for="mobile">Mobile Gaming</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="pc" name="interests[Gaming][]" value="PC Gaming">
+                            <label for="pc">PC Gaming</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="multiplayer" name="interests[Gaming][]"
+                                value="Online Multiplayer Games">
+                            <label for="multiplayer">Online Multiplayer Games</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="boardgames" name="interests[Gaming][]"
+                                value="Board Games and Card Games">
+                            <label for="boardgames">Board Games and Card Games</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="fantasy" name="interests[Gaming][]" value="Fantasy Sports">
+                            <label for="fantasy">Fantasy Sports</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dance -->
+                <div class="interest-category">
+                    <div class="category-header dance">
+                        <span class="category-icon">💃</span>
+                        Dance
+                    </div>
+                    <div class="sub-interests">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="bollywooddance" name="interests[Dance][]"
+                                value="Bollywood Dance">
+                            <label for="bollywooddance">Bollywood Dance</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="hiphop" name="interests[Dance][]"
+                                value="Hip Hop and Street Dance">
+                            <label for="hiphop">Hip Hop and Street Dance</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="classical" name="interests[Dance][]"
+                                value="Classical Dance (Bharatanatyam, Kathak)">
+                            <label for="classical">Classical Dance (Bharatanatyam, Kathak)</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="contemporary" name="interests[Dance][]"
+                                value="Contemporary Dance">
+                            <label for="contemporary">Contemporary Dance</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="salsa" name="interests[Dance][]" value="Salsa and Latin Dance">
+                            <label for="salsa">Salsa and Latin Dance</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="folk" name="interests[Dance][]" value="Bhangra and Folk Dances">
+                            <label for="folk">Bhangra and Folk Dances</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photography and Art -->
+                <div class="interest-category">
+                    <div class="category-header photo">
+                        <span class="category-icon">📷</span>
+                        Photography and Art
+                    </div>
+                    <div class="sub-interests">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="digitalart" name="interests[Photography and Art][]"
+                                value="Digital Art and Graphic Design">
+                            <label for="digitalart">Digital Art and Graphic Design</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="naturephoto" name="interests[Photography and Art][]"
+                                value="Nature Photography">
+                            <label for="naturephoto">Nature Photography</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="streetphoto" name="interests[Photography and Art][]"
+                                value="Street Photography">
+                            <label for="streetphoto">Street Photography</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="portraitphoto" name="interests[Photography and Art][]"
+                                value="Portrait Photography">
+                            <label for="portraitphoto">Portrait Photography</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="videography" name="interests[Photography and Art][]"
+                                value="Videography and Filmmaking">
+                            <label for="videography">Videography and Filmmaking</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="painting" name="interests[Photography and Art][]"
+                                value="Painting and Sketching">
+                            <label for="painting">Painting and Sketching</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Food and Cooking -->
+                <div class="interest-category">
+                    <div class="category-header food">
+                        <span class="category-icon">🍳</span>
+                        Food and Cooking
+                    </div>
+                    <div class="sub-interests">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="healthycooking" name="interests[Food and Cooking][]"
+                                value="Healthy and Organic Cooking">
+                            <label for="healthycooking">Healthy and Organic Cooking</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="streetfood" name="interests[Food and Cooking][]"
+                                value="Street Food Exploration">
+                            <label for="streetfood">Street Food Exploration</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="foodblogging" name="interests[Food and Cooking][]"
+                                value="Food Blogging and Reviewing">
+                            <label for="foodblogging">Food Blogging and Reviewing</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="baking" name="interests[Food and Cooking][]"
+                                value="Baking and Desserts">
+                            <label for="baking">Baking and Desserts</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="international" name="interests[Food and Cooking][]"
+                                value="International Cuisine">
+                            <label for="international">International Cuisine</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="regional" name="interests[Food and Cooking][]"
+                                value="Indian Regional Cuisine">
+                            <label for="regional">Indian Regional Cuisine</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Causes and Volunteering -->
+                <div class="interest-category">
+                    <div class="category-header social">
+                        <span class="category-icon">🤝</span>
+                        Social Causes and Volunteering
+                    </div>
+                    <div class="sub-interests">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="environment" name="interests[Social Causes and Volunteering][]"
+                                value="Environmental Awareness">
+                            <label for="environment">Environmental Awareness</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="animalwelfare" name="interests[Social Causes and Volunteering][]"
+                                value="Animal Welfare">
+                            <label for="animalwelfare">Animal Welfare</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="communityservice"
+                                name="interests[Social Causes and Volunteering][]" value="Community Service">
+                            <label for="communityservice">Community Service</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="mentalhealth" name="interests[Social Causes and Volunteering][]"
+                                value="Mental Health Awareness">
+                            <label for="mentalhealth">Mental Health Awareness</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="womenempowerment"
+                                name="interests[Social Causes and Volunteering][]" value="Women Empowerment">
+                            <label for="womenempowerment">Women Empowerment</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="education" name="interests[Social Causes and Volunteering][]"
+                                value="Education for Underprivileged Children">
+                            <label for="education">Education for Underprivileged Children</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reading and Book Clubs -->
+                <div class="interest-category">
+                    <div class="category-header reading">
+                        <span class="category-icon">📚</span>
+                        Reading and Book Clubs
+                    </div>
+                    <div class="sub-interests">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="fiction" name="interests[Reading and Book Clubs][]"
+                                value="Fiction">
+                            <label for="fiction">Fiction</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="nonfiction" name="interests[Reading and Book Clubs][]"
+                                value="Non-Fiction">
+                            <label for="nonfiction">Non-Fiction</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="indianauthors" name="interests[Reading and Book Clubs][]"
+                                value="Indian Authors and Literature">
+                            <label for="indianauthors">Indian Authors and Literature</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="poetry" name="interests[Reading and Book Clubs][]"
+                                value="Poetry and Short Stories">
+                            <label for="poetry">Poetry and Short Stories</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="fantasy" name="interests[Reading and Book Clubs][]"
+                                value="Fantasy and Sci-Fi">
+                            <label for="fantasy">Fantasy and Sci-Fi</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="academic" name="interests[Reading and Book Clubs][]"
+                                value="Academic Journals">
+                            <label for="academic">Academic Journals</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>
