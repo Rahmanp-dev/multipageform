@@ -103,7 +103,7 @@
 
         <h1>Thank You for Registering</h1>
 
-        <div class="unique-id" id="uniqueId">Your Unique ID: YUDI-</div>
+        <div class="unique-id" id="uniqueId">Your Unique ID: YUDI-<%= uniqueId %></div>
 
         <div class="update-text">We'll update you soon with your match!</div>
 
@@ -122,13 +122,25 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         // Generate a random 4-digit number
-        const randomId = Math.floor(1000 + Math.random() * 9000);
+        //const userID = Math.floor(1000 + Math.random() * 9000);
+        const generateUniqueUserId = async () => {
+            let userId;
+            let isUnique = false;
 
+            while (!isUnique) {
+                userId = Math.floor(1000 + Math.random() * 9000).toString(); // Generate a random 4-digit number
+                const existingUser = await User.findOne({ userId });
+                if (!existingUser) isUnique = true; // Check if the ID is unique
+            }
+
+            return userId;
+        };
+        const userID = await generateUniqueUserId();
         // Select the element with the ID 'uniqueId' and append the random number
-        document.getElementById("uniqueId").textContent += randomId;
-    </script>
+        document.getElementById("uniqueId").textContent += userID;
+    </script> -->
 </body>
 
 </html>
