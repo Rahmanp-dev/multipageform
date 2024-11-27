@@ -10,7 +10,10 @@
     "express": "^4.21.1",
     "express-session": "^1.18.1",
     "mongoose": "^8.8.2",
+<<<<<<< HEAD
     "nodemailer": "^6.9.16",
+=======
+>>>>>>> 81ccc30d9d83347655f3d2a74b7c134473b0e6b3
     "redis": "^4.7.0",
     "serverless-http": "^3.2.0",
     "session": "^0.1.0"
