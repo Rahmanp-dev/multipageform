@@ -47,7 +47,7 @@ router.post('/signup', async (req, res) => {
         await user.save();
 
         // Store the uniqueId in a cookie
-        res.cookie('uniqueId', uniqueId, { maxAge: 60000, httpOnly: true }); // Cookie expires in 1 minute
+        res.cookie('uniqueId', uniqueId, { maxAge: 450000, httpOnly: true }); // Cookie expires in 1 minute
 
         // Redirect to interests page
         res.redirect('/interests');
