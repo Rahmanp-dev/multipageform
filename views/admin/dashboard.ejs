@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        .interests-row {
+            display: none; /* Interests row hidden by default */
+        }
+        .name-link {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+        }
+        .name-link:hover {
+            text-decoration: none;
+        }
+        .interests-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .interest-category {
+            margin-right: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Admin Dashboard</h1>
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th> <!-- Serial Number Column -->
+                    <th>Unique ID</th> <!-- Unique ID Column -->
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach((user, index) => { %>
+                    <!-- Main Row -->
+                    <tr>
+                        <td><%= index + 1 %></td> <!-- Serial Number -->
+                        <td><%= user.uniqueId %></td> <!-- Unique ID (custom) -->
+                        <td class="name-link" onclick="toggleInterests('<%= index %>')">
+                            <%= user.name %>
+                        </td>
+                        <td><%= user.email %></td>
+                        <td><%= user.phone %></td>
+                        <td>
+                            <a href="/admin/users/<%= user._id %>/edit" class="btn btn-sm btn-warning">Edit</a>
+                        </td>
+                    </tr>
+                    <!-- Interests Row -->
+                    <tr class="interests-row" id="interests-<%= index %>">
+                        <td colspan="6">
+                            <div class="interests-container">
+                                <% for (let [category, items] of Object.entries(user.interests)) { %>
+                                    <div>
+                                        <div class="interest-category"><%= category %>:</div>
+                                        <ul>
+                                            <% items.forEach(item => { %>
+                                                <li><%= item %></li>
+                                            <% }); %>
+                                        </ul>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Function to toggle the visibility of interests
+        function toggleInterests(index) {
+            const interestsRow = document.getElementById(`interests-${index}`);
+            if (interestsRow.style.display === "none" || interestsRow.style.display === "") {
+                interestsRow.style.display = "table-row"; // Show the row
+            } else {
+                interestsRow.style.display = "none"; // Hide the row
+            }
+        }
+    </script>
+</body>
+</html>

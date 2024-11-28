@@ -63,13 +63,29 @@ const generateUniqueUserId = async () => {
 };
 
 // Page 1: Basic User Info
+// Page 1: Basic User Info
 router.get('/', (req, res) => {
-    res.render('signup');
+    res.render('signup', { errorMessage: '' }); // Pass an empty string initially
 });
+
 
 router.post('/signup', async (req, res) => {
     try {
-        const { name, email, phone, gender, college, collegeId, degree } = req.body;
+        const { name, email, collegeId } = req.body;
+
+        // Check if the email or collegeId already exists
+        const existingUser = await User.findOne({ $or: [{ email: email }, { collegeId: collegeId }] });
+
+        if (existingUser) {
+            let error = {};
+            if (existingUser.email === email) {
+                error.email = 'Email already exists. Please use a different one.';
+            }
+            if (existingUser.collegeId === collegeId) {
+                error.collegeId = 'College ID already exists. Please use a different one.';
+            }
+            return res.json({ success: false, error });
+        }
 
         // Generate a unique ID for the user
         const uniqueId = await generateUniqueUserId();
@@ -79,28 +95,20 @@ router.post('/signup', async (req, res) => {
             uniqueId, // Dynamically generated unique ID
             name,
             email,
-            phone,
-            gender,
-            college,
             collegeId,
-            degree,
-            interests: {}, // Assuming this will be filled later
-            questions: {}, // Assuming this will be filled later
+            // Add other fields as necessary
         });
 
         await user.save();
 
-        // Store the uniqueId in a cookie
-        res.cookie('uniqueId', uniqueId, { maxAge: 3000000, httpOnly: true }); // Cookie expires in 5 minute
+        // Set cookies in the response
+        res.cookie('uniqueId', uniqueId, { maxAge: 3000000, httpOnly: true }); // Cookie expires in 5 minutes
         res.cookie('email', email, { maxAge: 3000000, httpOnly: true });
 
-        console.log("Saving user email:", email);
-
-        // Redirect to interests page
-        res.redirect('/interests');
+        res.json({ success: true });
     } catch (err) {
         console.error('Error saving user:', err);
-        res.status(500).send('An error occurred.');
+        res.status(500).json({ success: false, error: 'An error occurred. Please try again.' });
     }
 });
 
@@ -211,5 +219,82 @@ router.get('/thankyou', async (req, res) => {
         res.status(500).send('An error occurred.');
     }
 });
+
+// Admin Dashboard - View All Users
+router.get('/admin', async (req, res) => {
+    try {
+        const users = await User.find();
+        
+        // Convert Map (interests) to plain object for all users
+        const processedUsers = users.map(user => ({
+            ...user.toObject(),
+            interests: user.interests ? Object.fromEntries(user.interests) : {}
+        }));
+
+        res.render('admin/dashboard', { users: processedUsers });
+
+    } catch (err) {
+        console.error('Error fetching users:', err);
+        res.status(500).send('An error occurred while fetching users.');
+    }
+});
+
+
+// Admin Edit User - Render Form
+router.get("/admin/users/:id/edit", async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id); // Find user by ID
+        if (!user) return res.status(404).send("User not found");
+        res.render("admin/edit-user", { user });
+    } catch (err) {
+        console.error("Error fetching user for edit:", err);
+        res.status(500).send("Error loading edit form");
+    }
+});
+
+// Admin Edit User - Submit Form
+router.post("/admin/users/:id/edit", async (req, res) => {
+    try {
+        const { name, email, phone, gender, college, qualities, hobbies, about } = req.body;
+
+        // Convert interests from comma-separated strings back to objects
+        const interests = {};
+        for (const [key, value] of Object.entries(req.body.interests || {})) {
+            interests[key] = value.split(",").map(item => item.trim());
+        }
+
+        await User.findByIdAndUpdate(req.params.id, {
+            name,
+            email,
+            phone,
+            gender,
+            college,
+            interests,
+            questions: {
+                qualities,
+                hobbies,
+                about,
+            },
+        });
+
+        res.redirect("/admin/dashboard");
+    } catch (err) {
+        console.error("Error updating user:", err);
+        res.status(500).send("Error updating user");
+    }
+});
+
+
+// Admin Delete User
+router.post("/admin/users/:id/delete", async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.params.id); // Delete user by ID
+        res.redirect("/admin/dashboard");
+    } catch (err) {
+        console.error("Error deleting user:", err);
+        res.status(500).send("Error deleting user");
+    }
+});
+
 
 module.exports = router;

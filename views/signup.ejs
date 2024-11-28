@@ -1,326 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welcome to Yudi</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+      }
+
+      /* Landing page styles */
+      .landing-page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        color: #1a2e3b;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Logo styles */
+      .logo {
+        width: 15rem;
+        height: 15rem;
+        object-fit: contain;
+        margin-bottom: 2rem;
+      }
+
+      /* Typography */
+      .landing-title {
+        font-size: 4rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #1a2e3b;
+      }
+
+      .landing-description {
+        font-size: 2rem;
+        line-height: 1.4;
+        margin-bottom: 1rem;
+        max-width: 800px;
+      }
+
+      .landing-subdescription {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .emphasis {
+        font-weight: 600;
+      }
+
+      /* Button styles */
+      .button {
+        width: auto;
+        /* Adjusts the button width to fit its content */
+        padding: 0.75rem 1.5rem;
+        /* Add some padding for better appearance */
+        background: #2563eb;
+        /* Changed to blue */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+        text-decoration: none;
+        display: inline-block;
+        /* Ensures proper sizing */
+      }
+
+      .button:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+      }
+
+      .landing-page .button {
+        display: inline-flex;
+        align-items: center;
+        padding: 1rem 2rem;
+        background-color: white;
+        color: #1a2e3b;
+        border: none;
+        border-radius: 100px;
+        font-size: 1.25rem;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .landing-page .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Form page styles */
+      .form-page {
+        min-height: 100vh;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .form-page.active {
+        display: flex;
+      }
+
+      form {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        max-width: 450px;
+      }
+
+      .form-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 1rem;
+        display: block;
+        color: #2563eb;
+      }
+
+      .form-title {
+        text-align: center;
+        color: #2563eb;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .form-subtitle {
+        text-align: center;
+        color: #6b7280;
+        font-size: 0.875rem;
+        margin-bottom: 2rem;
+      }
+
+      .input-group {
+        margin-bottom: 1.25rem;
+      }
+
+      label {
+        display: block;
+        color: #4b5563;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        transition: border-color 0.15s ease;
+      }
+
+      input::placeholder {
+        color: #9ca3af;
+      }
+
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .error{
+        color: red;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+      }
+
+      /* Animation classes */
+      .fade-out {
+        animation: fadeOut 0.3s forwards;
+      }
+
+      .fade-in {
+        animation: fadeIn 0.3s forwards;
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        to {
+          opacity: 0;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
         }
 
-        /* Landing page styles */
-        .landing-page {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            color: #1a2e3b;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        to {
+          opacity: 1;
         }
+      }
 
-        /* Logo styles */
-        .logo {
-            width: 15rem;
-            height: 15rem;
-            object-fit: contain;
-            margin-bottom: 2rem;
-        }
-
-        /* Typography */
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
         .landing-title {
-            font-size: 4rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #1a2e3b;
+          font-size: 2.5rem;
         }
 
         .landing-description {
-            font-size: 2rem;
-            line-height: 1.4;
-            margin-bottom: 1rem;
-            max-width: 800px;
+          font-size: 1.5rem;
         }
 
         .landing-subdescription {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
+          font-size: 1.25rem;
         }
-
-        .emphasis {
-            font-weight: 600;
-        }
-
-        /* Button styles */
-        .button {
-            width: auto;
-            /* Adjusts the button width to fit its content */
-            padding: 0.75rem 1.5rem;
-            /* Add some padding for better appearance */
-            background: #2563eb;
-            /* Changed to blue */
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-            text-decoration: none;
-            display: inline-block;
-            /* Ensures proper sizing */
-        }
-
-        .button:hover {
-            background: #1d4ed8;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-        }
-
-        .landing-page .button {
-            display: inline-flex;
-            align-items: center;
-            padding: 1rem 2rem;
-            background-color: white;
-            color: #1a2e3b;
-            border: none;
-            border-radius: 100px;
-            font-size: 1.25rem;
-            font-weight: 500;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .landing-page .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Form page styles */
-        .form-page {
-            min-height: 100vh;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .form-page.active {
-            display: flex;
-        }
-
-        form {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            width: 100%;
-            max-width: 450px;
-        }
-
-        .form-icon {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 1rem;
-            display: block;
-            color: #2563eb;
-        }
-
-        .form-title {
-            text-align: center;
-            color: #2563eb;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-subtitle {
-            text-align: center;
-            color: #6b7280;
-            font-size: 0.875rem;
-            margin-bottom: 2rem;
-        }
-
-        .input-group {
-            margin-bottom: 1.25rem;
-        }
-
-        label {
-            display: block;
-            color: #4b5563;
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
-        }
-
-        input,
-        select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            transition: border-color 0.15s ease;
-        }
-
-        input::placeholder {
-            color: #9ca3af;
-        }
-
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        /* Animation classes */
-        .fade-out {
-            animation: fadeOut 0.3s forwards;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.3s forwards;
-        }
-
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-            }
-
-            to {
-                opacity: 0;
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .landing-title {
-                font-size: 2.5rem;
-            }
-
-            .landing-description {
-                font-size: 1.5rem;
-            }
-
-            .landing-subdescription {
-                font-size: 1.25rem;
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Landing Page -->
     <div class="landing-page" id="landing">
-        <img src="images/logo.png" alt="Yudi Logo" class="logo">
-
-        <h1 class="landing-title">Welcome to YUDI</h1>
-        <p class="landing-description">Find Your People Build Your Community</p>
-        <p class="landing-subdescription">Our website helps you connect with <span class="emphasis">YOUR PEOPLE</span>
-        </p>
-
-        <a href="#" class="button" onclick="showForm(event)">
-            GET STARTED
-        </a>
+      <img src="images/logo.png" alt="Yudi Logo" class="logo" />
+      <h1 class="landing-title">Welcome to YUDI</h1>
+      <p class="landing-description">Find Your People Build Your Community</p>
+      <p class="landing-subdescription">
+        Our website helps you connect with
+        <span class="emphasis">YOUR PEOPLE</span>
+      </p>
+      <a href="#" class="button" onclick="showForm(event)"> GET STARTED </a>
     </div>
-
     <!-- Form Page -->
     <div class="form-page" id="form">
-        <form action="/signup" method="POST">
-            <svg class="form-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-
-            <h1 class="form-title">About Yourself</h1>
-            <p class="form-subtitle">Let us find more like minded people.</p>
-
-            <div class="input-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="you@example.com" required>
-            </div>
-
-            <div class="input-group">
-                <!-- <label for="fullname">Full Name</label> -->
-                <label for="name">Full Name</label>
-                <!--   <input type="text" id="fullname" name="fullname" placeholder="Your Full Name" required> -->
-                <input type="text" id="name" name="name" placeholder="Your Full Name" required>
-            </div>
-
-            <div class="input-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required>
-            </div>
-
-            <div class="input-group">
-                <label for="gender">Gender</label>
-                <select id="gender" name="gender" required>
-                    <option value="">Select gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-
-            <div class="input-group">
-                <label for="college">College</label>
-                <select id="college" name="college" required>
-                    <option value="">Select college</option>
-                    <option value="mahindra">Mahindra University</option>
-                    <option value="icfai">ICFAI</option>
-                </select>
-            </div>
-
-            <div class="input-group">
-                <label for="collegeId">College ID Number</label>
-                <input type="text" id="collegeId" name="collegeId" placeholder="Your College ID Number" required>
-            </div>
-
-            <div class="input-group">
-                <label for="degree">Degree</label>
-                <input type="text" id="degree" name="degree" placeholder="Your Degree" required>
-            </div>
-
-            <button type="submit" class="button">Sign Up</button>
-        </form>
+      <form id="signupForm">
+        <svg
+          class="form-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <h1 class="form-title">About Yourself</h1>
+        <p class="form-subtitle">Let us find more like-minded people.</p>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
+          <div id="emailError" class="error"></div>
+        </div>
+        <div class="input-group">
+          <label for="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Your Full Name"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="phone">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="Your Phone Number"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender" required>
+            <option value="">Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="college">College</label>
+          <select id="college" name="college" required>
+            <option value="">Select college</option>
+            <option value="mahindra">Mahindra University</option>
+            <option value="icfai">ICFAI</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="collegeId">College ID Number</label>
+          <input
+            type="text"
+            id="collegeId"
+            name="collegeId"
+            placeholder="Your College ID Number"
+            required
+          />
+          <div id="collegeIdError" class="error"></div>
+        </div>
+        <div class="input-group">
+          <label for="degree">Degree</label>
+          <input
+            type="text"
+            id="degree"
+            name="degree"
+            placeholder="Your Degree"
+            required
+          />
+        </div>
+        <button type="submit" class="button">Sign Up</button>
+      </form>
     </div>
-
     <script>
-        function showForm(event) {
-            event.preventDefault();
-            document.getElementById('landing').classList.add('fade-out');
-            setTimeout(() => {
-                document.getElementById('landing').style.display = 'none';
-                document.getElementById('form').classList.add('active');
-                document.getElementById('form').classList.add('fade-in');
-            }, 300);
-        }
+      function showForm(event) {
+        event.preventDefault();
+        document.getElementById("landing").classList.add("fade-out");
+        setTimeout(() => {
+          document.getElementById("landing").style.display = "none";
+          document.getElementById("form").classList.add("active");
+          document.getElementById("form").classList.add("fade-in");
+        }, 300);
+      }
+      $(document).ready(function () {
+        $("#signupForm").on("submit", function (e) {
+          e.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: "/signup",
+            data: $("#signupForm").serialize(),
+            success: function (response) {
+              if (response.success) {
+                window.location.href = "/interests";
+              } else {
+                if (response.error.email) {
+                  $("#emailError").text(response.error.email);
+                } else {
+                  $("#emailError").text("");
+                }
+                if (response.error.collegeId) {
+                  $("#collegeIdError").text(response.error.collegeId);
+                } else {
+                  $("#collegeIdError").text("");
+                }
+              }
+            },
+            error: function (err) {
+              alert("An error occurred. Please try again.");
+            },
+          });
+        });
+      });
     </script>
-</body>
-
+  </body>
 </html>
